@@ -1,5 +1,6 @@
 #include <string>
 #include <new>
+#include <memory>
 #include <iostream>
 #include "pattern.h"
 
@@ -10,32 +11,32 @@ namespace pattern {
 class ITimeKeeper {
 	public:
 		ITimeKeeper() {}
-		virtual string getCurrentTime();
+		virtual void printCurrentTime() = 0;
 		virtual ~ITimeKeeper();
 	private:
 		//DISALLOW_EVIL_CONSTRUCTORS(ITimeKeeper);
 };
-string ITimeKeeper::getCurrentTime() {}
+void ITimeKeeper::printCurrentTime() {}
 ITimeKeeper::~ITimeKeeper() {}
 
 // base class ITimeKeeperFactory
 class ITimeKeeperFactory {
 	public:
 		ITimeKeeperFactory() {}
-		virtual ITimeKeeper *create();
+		virtual ITimeKeeper* create() const = 0;
 		virtual ~ITimeKeeperFactory();
 	private:
 		//DISALLOW_EVIL_CONSTRUCTORS(ITimeKeeperFactory);
 
 };
-ITimeKeeper *ITimeKeeperFactory::create() {}
+ITimeKeeper* ITimeKeeperFactory::create() const {}
 ITimeKeeperFactory::~ITimeKeeperFactory() {}
 
 // class AtomicClock derived from ITimeKeeper
 class AtomicClock : public ITimeKeeper {
 	public:
 		AtomicClock() {}
-		string getCurrentTime() {
+		void printCurrentTime() {
 			cout<<"Current time in form of Atomic Clock"<<endl;
 		}
 	private:
@@ -46,8 +47,8 @@ class AtomicClock : public ITimeKeeper {
 class AtomicClockFactory : public ITimeKeeperFactory {
 	public:
 		AtomicClockFactory() {}
-		ITimeKeeper *create() {
-			return new AtomicClock();
+		ITimeKeeper* create() const {
+			 return new AtomicClock();
 		}
 	private:
 		//DISALLOW_EVIL_CONSTRUCTORS(AtomicClockFactory);
@@ -57,9 +58,9 @@ class AtomicClockFactory : public ITimeKeeperFactory {
 using namespace pattern;
 
 // keep client code close to change
-void client_call(ITimeKeeperFactory factory) {
-	ITimeKeeper *time_keeper = factory.create();
-	time_keeper->getCurrentTime();
+void client_call(const ITimeKeeperFactory& factory) {
+	ITimeKeeper* time_keeper = factory.create();
+	time_keeper->printCurrentTime();
 }
 
 int
