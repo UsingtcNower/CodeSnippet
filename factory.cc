@@ -23,13 +23,13 @@ ITimeKeeper::~ITimeKeeper() {}
 class ITimeKeeperFactory {
 	public:
 		ITimeKeeperFactory() {}
-		virtual ITimeKeeper* create() const = 0;
+		virtual shared_ptr<ITimeKeeper> create() const = 0;
 		virtual ~ITimeKeeperFactory();
 	private:
 		//DISALLOW_EVIL_CONSTRUCTORS(ITimeKeeperFactory);
 
 };
-ITimeKeeper* ITimeKeeperFactory::create() const {}
+shared_ptr<ITimeKeeper> ITimeKeeperFactory::create() const {}
 ITimeKeeperFactory::~ITimeKeeperFactory() {}
 
 // class AtomicClock derived from ITimeKeeper
@@ -47,8 +47,9 @@ class AtomicClock : public ITimeKeeper {
 class AtomicClockFactory : public ITimeKeeperFactory {
 	public:
 		AtomicClockFactory() {}
-		ITimeKeeper* create() const {
-			 return new AtomicClock();
+		shared_ptr<ITimeKeeper> create() const {
+			shared_ptr<ITimeKeeper> pITimeKeeper(new AtomicClock()); 
+			return pITimeKeeper;
 		}
 	private:
 		//DISALLOW_EVIL_CONSTRUCTORS(AtomicClockFactory);
@@ -59,7 +60,7 @@ using namespace pattern;
 
 // keep client code close to change
 void client_call(const ITimeKeeperFactory& factory) {
-	ITimeKeeper* time_keeper = factory.create();
+	shared_ptr<ITimeKeeper> time_keeper = factory.create();
 	time_keeper->printCurrentTime();
 }
 
