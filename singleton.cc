@@ -1,21 +1,19 @@
 // Singleton pattern code snippet 
 #include "pattern.h"
 #include <iostream>
+#include <memory>
 
 namespace pattern{
 
 class SingletonCounter {
 private:
 	SingletonCounter():cnt(0) {}
-	static SingletonCounter *instance;
+	static std::shared_ptr<SingletonCounter> instance;
 	int cnt;
 	DISALLOW_EVIL_CONSTRUCTORS(SingletonCounter);
 public:
 	static SingletonCounter *getInstance() {
-		if(instance==NULL) {
-			instance = new SingletonCounter();
-		}
-		return instance;
+		return instance.get();
 	}
 
 	void increase(int x) {
@@ -26,7 +24,7 @@ public:
 		return cnt;
 	}
 };
-SingletonCounter *SingletonCounter::instance = NULL;
+std::shared_ptr<SingletonCounter> SingletonCounter::instance(new SingletonCounter());
 
 }	// namespace pattern
 
