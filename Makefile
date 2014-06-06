@@ -10,6 +10,7 @@ PROGRAMS =  factory	\
 	    strategy	\
 	    strategy_function_bind_version	\
 	    template	\
+	    observer	\
 
 all: $(PROGRAMS)
 
