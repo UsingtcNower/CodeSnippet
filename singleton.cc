@@ -12,8 +12,8 @@ private:
 	int cnt;
 	DISALLOW_EVIL_CONSTRUCTORS(SingletonCounter);
 public:
-	static SingletonCounter *getInstance() {
-		return instance.get();
+	static std::shared_ptr<SingletonCounter> getInstance() {
+		return instance;
 	}
 
 	void increase(int x) {
@@ -32,10 +32,10 @@ std::shared_ptr<SingletonCounter> SingletonCounter::instance(new SingletonCounte
 int
 main()
 {
-	pattern::SingletonCounter *user1 = pattern::SingletonCounter::getInstance();
+	std::shared_ptr<pattern::SingletonCounter> user1 = pattern::SingletonCounter::getInstance();
 	user1->increase(1);
 	std::cout<<user1->getCount()<<std::endl;
-	pattern::SingletonCounter *user2 = pattern::SingletonCounter::getInstance();
+	std::shared_ptr<pattern::SingletonCounter> user2 = pattern::SingletonCounter::getInstance();
 	user2->increase(2);
 	std::cout<<user2->getCount()<<std::endl;
 }
