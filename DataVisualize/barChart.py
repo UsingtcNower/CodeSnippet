@@ -40,7 +40,7 @@ if __name__ == "__main__":
 	for item in raw_list:
 		belong_list.append(belongs(item))
 	d = {}
-	for i in range(len(raw_list)):
+	for i in xrange(len(raw_list)):
 		raw_list[i] = raw_list[i].strip('\n')
 		if belong_list[i] in d.keys():
 			cnt = int(d[belong_list[i]])+1
