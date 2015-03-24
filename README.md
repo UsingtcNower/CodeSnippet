@@ -1,3 +1,3 @@
 # Code Snippet
   My code snippet about design pattern, data visualization, data analysis,
-online judge solution, etc
+algorithms, artificial intelligence, machine learning, etc
