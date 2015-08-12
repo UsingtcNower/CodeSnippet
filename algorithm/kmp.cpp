@@ -80,6 +80,9 @@ void testKmp(char *pattern, char *text) {
 
 int
 main() {
+	testPrefixFunc("bbbbbbaa");
+	testKmp("bbbbbbaa", "abbabaaaabbbaabaabaabbbaaabaaaaaabbbabbaabbabaabbabaaaaababbabbaaaaabbbbaaabbaaabbbbabbbbaaabbaaaaababbaababbabaaabaabbbbbbbaabaabaabbbbababbbababbaaababbbabaabbaaabbbba");
+	/*  
 	testKmp("", "");
 	testKmp("", "dsf");
 	testKmp("fd","fd");
@@ -87,4 +90,5 @@ main() {
 	testKmp("aab", "acaabab");
 	testKmp("a", "acaabab");
 	testKmp("ababa", "ababcabcababababababmp");
+	*/
 }
