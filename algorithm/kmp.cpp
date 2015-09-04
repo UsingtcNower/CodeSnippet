@@ -21,12 +21,12 @@
 #include <cstring>
 
 void generatePrefixFunc(char *pattern, int *prefix, int length) {
-	prefix[0]=0;
+	prefix[0]=-1;
 	for(int i=1;i<length;++i) {
-		if(pattern[i] == pattern[prefix[i-1]]) {
+		if(pattern[i] == pattern[prefix[i-1]+1]) {
 			prefix[i] = prefix[i-1]+1;
 		} else {
-			prefix[i] = 0;
+			prefix[i] = -1;
 		}
 	}
 }
@@ -44,7 +44,7 @@ int kmp(char *pattern, char *text) {
 	int index = -1;
 	for(;i<n;++i) {
 		while(j>0 && pattern[j] != text[i]) {
-			j = prefix[j-1];
+			j = prefix[j-1]+1;
 		}
 
 		if(pattern[j] == text[i]) {
@@ -80,9 +80,8 @@ void testKmp(char *pattern, char *text) {
 
 int
 main() {
-	testPrefixFunc("bbbbbbaa");
-	testKmp("bbbbbbaa", "abbabaaaabbbaabaabaabbbaaabaaaaaabbbabbaabbabaabbabaaaaababbabbaaaaabbbbaaabbaaabbbbabbbbaaabbaaaaababbaababbabaaabaabbbbbbbaabaabaabbbbababbbababbaaababbbabaabbaaabbbba");
-	/*  
+//	testPrefixFunc("bbbbbbaa");
+//	testKmp("bbbbbbaa", "abbabaaaabbbaabaabaabbbaaabaaaaaabbbabbaabbabaabbabaaaaababbabbaaaaabbbbaaabbaaabbbbabbbbaaabbaaaaababbaababbabaaabaabbbbbbbaabaabaabbbbababbbababbaaababbbabaabbaaabbbba");
 	testKmp("", "");
 	testKmp("", "dsf");
 	testKmp("fd","fd");
@@ -90,5 +89,4 @@ main() {
 	testKmp("aab", "acaabab");
 	testKmp("a", "acaabab");
 	testKmp("ababa", "ababcabcababababababmp");
-	*/
 }
