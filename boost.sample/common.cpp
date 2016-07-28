@@ -136,11 +136,12 @@ namespace udp_receiver
 			boost::asio::ip::address addr(boost::asio::ip::address::from_string("10.1.3.104"));
 			boost::asio::ip::udp::endpoint listen_endpoint(addr, 5555);
 			boost::asio::ip::udp::socket sock(ioservice, listen_endpoint);
+			int msg_cnt = 0;
 			for(;;) {
 				char buf[4096];
 				boost::system::error_code ec;
 				std::size_t receive_length = sock.receive(boost::asio::buffer(buf));
-				std::cout << std::to_string((long long )receive_length) << " " << buf << std::endl;
+				std::cout << std::to_string((long long )receive_length) << " " << (unsigned short)buf[0] << " " << msg_cnt++ << std::endl;
 			}
 		}
 		catch(std::exception &e)
