@@ -11,11 +11,12 @@ port = 5555
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.connect((host,port))
 
-for i in xrange(0,10000):
-	buffer = str(i)
-	buffer = buffer.join([random.choice(string.ascii_letters+string.digits) for _ in range(2000)])
-	buffer = struct.pack("!2001s", buffer)
+for i in xrange(0,256):
+	buffer = [chr(i)]
+	buffer.extend([random.choice(string.ascii_letters) for _ in range(4095)])
+	buffer = ''.join(buffer)
+	buffer = struct.pack("4096c", *buffer)
+	print len(buffer)
 	sock.sendall(buffer)
-	#print str
 	time.sleep(1)
 sock.shutdown(1)
