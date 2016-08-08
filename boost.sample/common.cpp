@@ -66,8 +66,8 @@ namespace multhread_async_op
 		boost::thread thread2([&ioservice]() {ioservice.run();});
 
 		std::cout<<"test\n";
-		//thread1.join();
-		//thread2.join();
+		thread1.join();
+		thread2.join();
 		system("pause");
 		return 0;
 	}
@@ -148,6 +148,30 @@ namespace udp_receiver
 		{
 			std::cerr << e.what() << std::endl;
 		}
+		getchar();
+		return 0;
+	}
+}
+
+namespace this_pointer
+{
+	class Base
+	{
+	public:
+		void print_this()
+		{
+			std::cout << this << std::endl;
+			// only avaliable when it's heap object
+			//delete this;
+		}
+	};
+	int main()
+	{
+		Base stack_obj;
+		stack_obj.print_this();
+		Base *heap_obj = new Base();
+		heap_obj->print_this();
+		delete heap_obj;
 		getchar();
 		return 0;
 	}
