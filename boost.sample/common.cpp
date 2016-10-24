@@ -12,7 +12,8 @@ namespace blocking_timer
 {
 	void print(const boost::system::error_code& ) 
 	{
-		std::cout<<"Hello, world!"<<std::endl;
+		if(true)
+			std::cout<<"Hello, world!"<<std::endl;
 	}
 
 	int main()
@@ -20,7 +21,9 @@ namespace blocking_timer
 		boost::asio::io_service io;
 		boost::asio::deadline_timer timer(io, boost::posix_time::seconds(3));
 		timer.async_wait(&print);
+		timer.cancel();
 		io.run();
+		bool cancel=true;
 		std::cout<<"finished"<<std::endl;
 		system("pause");
 		return 0;
